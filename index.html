@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leadership Action Toolkit Pro 2026 - Master Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Roboto', 'sans-serif'],
+                        display: ['Oswald', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            orange: '#FF9800',
+                            teal: '#009688',
+                            dark: '#1a237e',
+                            light: '#f8fafc',
+                            danger: '#e53e3e',
+                            example: '#FEF3C7'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Roboto', sans-serif; }
+        h1, h2, h3, h4, h5, h6, button, .font-display { font-family: 'Oswald', sans-serif; }
+        
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; color: black; font-size: 11pt; }
+            .print-container { 
+                box-shadow: none !important; border: none !important; width: 100% !important; 
+                max-width: 100% !important; padding: 0 !important; margin: 0 !important;
+            }
+            .page-break { page-break-before: always; }
+            input, textarea { border: 1px solid #ccc !important; background: white !important; color: black !important; }
+            .example-section.hidden { display: none !important; }
+            .input-section.hidden { display: none !important; }
+        }
+
+        .tab-active {
+            border-bottom: 4px solid #FF9800;
+            color: #1a237e;
+            background-color: rgba(255, 152, 0, 0.05);
+        }
+        
+        textarea::-webkit-scrollbar { width: 6px; }
+        textarea::-webkit-scrollbar-track { background: #f1f1f1; }
+        textarea::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col">
+
+    <!-- HEADER -->
+    <header class="bg-brand-dark text-white p-4 shadow-lg no-print sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 bg-brand-orange rounded flex items-center justify-center">
+                    <i class="ph ph-briefcase text-2xl text-white"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold uppercase tracking-wider">Leadership Toolkit 2026</h1>
+                    <p class="text-xs text-gray-300 font-light tracking-widest font-display">Bộ Công cụ Thực chiến dành cho Lãnh đạo</p>
+                </div>
+            </div>
+            <div class="hidden md:flex items-center gap-4">
+                <span class="text-xs uppercase bg-white/10 px-3 py-1 rounded border border-white/20"><i class="ph ph-cloud-check mr-1"></i> Auto-Save: ON</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVIGATION -->
+    <nav class="bg-white shadow-sm border-b border-gray-200 no-print sticky top-[72px] z-40">
+        <div class="max-w-6xl mx-auto flex overflow-x-auto">
+            <button onclick="switchTab('manual')" id="tab-manual" class="tab-active flex-1 py-4 px-4 text-center font-bold text-lg uppercase tracking-wide hover:bg-gray-50 transition-colors whitespace-nowrap">1. Manual of Me</button>
+            <button onclick="switchTab('audit')" id="tab-audit" class="flex-1 py-4 px-4 text-center font-bold text-lg uppercase tracking-wide hover:bg-gray-50 transition-colors whitespace-nowrap text-gray-500">2. 5C Audit</button>
+            <button onclick="switchTab('culture')" id="tab-culture" class="flex-1 py-4 px-4 text-center font-bold text-lg uppercase tracking-wide hover:bg-gray-50 transition-colors whitespace-nowrap text-gray-500">3. Culture Canvas</button>
+            <button onclick="switchTab('conflict')" id="tab-conflict" class="flex-1 py-4 px-4 text-center font-bold text-lg uppercase tracking-wide hover:bg-gray-50 transition-colors whitespace-nowrap text-gray-500">4. SCARF Conflict</button>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 p-4 md:p-8 overflow-y-auto">
+        
+        <!-- TOOLBAR -->
+        <div class="max-w-5xl mx-auto mb-6 flex flex-col md:flex-row justify-between items-center gap-4 no-print mt-4">
+            <div class="bg-white p-1 rounded-full shadow-md border border-gray-200 flex">
+                <button onclick="setMode('blank')" id="btn-blank" class="px-6 py-2 rounded-full font-bold text-sm uppercase bg-brand-dark text-white shadow transition-all flex items-center"><i class="ph ph-pencil-simple mr-2"></i> Nhập Liệu</button>
+                <button onclick="setMode('example')" id="btn-example" class="px-6 py-2 rounded-full font-bold text-sm uppercase text-gray-500 hover:bg-gray-100 transition-all flex items-center"><i class="ph ph-lightbulb mr-2"></i> Xem Ví dụ Mẫu</button>
+            </div>
+            <div class="flex gap-3">
+                <button onclick="saveAllData()" class="bg-brand-teal text-white px-5 py-2 rounded shadow hover:bg-teal-700 transition flex items-center font-display uppercase font-bold text-sm"><i class="ph ph-floppy-disk mr-2"></i> Lưu (Save)</button>
+                <button onclick="window.print()" class="bg-gray-800 text-white px-5 py-2 rounded shadow hover:bg-black transition flex items-center font-display uppercase font-bold text-sm"><i class="ph ph-printer mr-2"></i> In PDF (A4)</button>
+            </div>
+        </div>
+
+        <!-- PRINT CONTAINER -->
+        <div class="print-container max-w-[210mm] mx-auto bg-white min-h-[297mm] shadow-2xl p-8 md:p-12 relative border-t-8 border-brand-orange">
+            <div class="absolute bottom-4 right-8 text-right opacity-50 hidden print:block">
+                <p class="text-xs font-bold text-brand-dark">Học Liệu Đào Tạo 2026</p>
+                <p class="text-[10px] text-gray-500">Rosie Đào Hạnh Giang - CEO Build Talents</p>
+            </div>
+
+            <!-- ================= TAB 1: MANUAL OF ME ================= -->
+            <div id="content-manual" class="tab-content">
+                <div class="flex justify-between items-start border-b-2 border-gray-200 pb-4 mb-8">
+                    <div>
+                        <h2 class="text-4xl font-display font-bold text-brand-dark uppercase">Manual of Me</h2>
+                        <p class="text-gray-500 text-sm mt-1">Bản hướng dẫn sử dụng cá nhân: Giúp đồng đội hiểu đúng về bạn.</p>
+                    </div>
+                    <div class="text-right bg-gray-100 p-2 rounded">
+                        <span class="block text-xs font-bold text-gray-500 uppercase">Ngày cập nhật</span>
+                        <span id="date-display" class="text-brand-dark font-bold"></span>
+                    </div>
+                </div>
+
+                <div id="manual-example" class="example-section hidden bg-brand-example border-l-4 border-brand-orange p-6 rounded mb-8">
+                    <h3 class="text-brand-orange font-bold text-lg mb-4 flex items-center uppercase"><i class="ph ph-star-fill mr-2"></i> Mẫu tham khảo: GĐ Marketing (Gen Y)</h3>
+                    <div class="grid grid-cols-1 gap-6">
+                        <div class="bg-white p-4 rounded shadow-sm border border-yellow-200">
+                            <strong class="text-brand-dark block mb-1">1. Giờ vàng (Deep Work):</strong>
+                            <p class="text-gray-700 italic text-sm">"Tôi là người của buổi sáng. <strong>8:00 - 10:30</strong> là khung giờ 'Thần thánh' để tôi duyệt Creative và lên Plan. Xin đừng book lịch họp vào giờ này trừ khi cháy nhà. Sau 16h, não tôi bắt đầu 'đình công'."</p>
+                        </div>
+                        <div class="bg-white p-4 rounded shadow-sm border border-yellow-200">
+                            <strong class="text-brand-dark block mb-1">2. Phong cách Giao tiếp:</strong>
+                            <p class="text-gray-700 italic text-sm">"- Việc gấp: Gọi điện trực tiếp. Đừng nhắn tin rồi chờ.<br>- Việc cần duyệt ngân sách: Gửi Email. Tôi dị ứng với Voice message dài lê thê trên Zalo mà không có tóm tắt text."</p>
+                        </div>
+                        <div class="bg-white p-4 rounded shadow-sm border border-yellow-200">
+                            <strong class="text-brand-dark block mb-1">3. Phản hồi (Feedback):</strong>
+                            <p class="text-gray-700 italic text-sm">"Hãy nói thẳng (Radical Candor). Đừng dùng kỹ thuật 'Bánh mì kẹp thịt' (Khen-Chê-Khen), nó làm tôi thấy giả tạo. Nếu tôi sai, chỉ ra lỗi và số liệu. Tôi không để bụng."</p>
+                        </div>
+                        <div class="bg-white p-4 rounded shadow-sm border border-yellow-200">
+                            <strong class="text-brand-danger block mb-1">4. Red Flags (Cấm kỵ):</strong>
+                            <p class="text-gray-700 italic text-sm text-brand-danger">- Họp mà không có Agenda gửi trước.<br>- Micromanage: Hỏi 'em làm xong chưa' mỗi 30 phút.<br>- Add vào nhóm chat 'tám chuyện' không liên quan dự án.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="manual-blank" class="input-section">
+                    <div class="mb-6">
+                        <label class="block text-brand-dark font-bold uppercase text-sm mb-2">Họ tên & Vị trí:</label>
+                        <input type="text" id="inp-name" class="w-full border border-gray-300 p-3 rounded font-bold text-lg bg-gray-50" placeholder="Nguyễn Văn A...">
+                    </div>
+                    <div class="space-y-6">
+                        <div>
+                            <label class="font-bold text-brand-dark uppercase flex items-center gap-2 mb-2"><i class="ph ph-clock text-brand-teal text-xl"></i> 1. Giờ Vàng & Nhịp sinh học</label>
+                            <textarea id="inp-man-1" rows="3" class="w-full border border-gray-300 p-4 rounded focus:border-brand-teal" placeholder="- Giờ tập trung tuyệt đối: ...&#10;- Giờ sẵn sàng họp: ..."></textarea>
+                        </div>
+                        <div>
+                            <label class="font-bold text-brand-dark uppercase flex items-center gap-2 mb-2"><i class="ph ph-chat-teardrop-text text-brand-teal text-xl"></i> 2. Kênh Giao tiếp Ưu tiên</label>
+                            <textarea id="inp-man-2" rows="3" class="w-full border border-gray-300 p-4 rounded focus:border-brand-teal" placeholder="- Việc gấp: ...&#10;- Việc thường: ...&#10;- Quy tắc Zalo/Email: ..."></textarea>
+                        </div>
+                        <div>
+                            <label class="font-bold text-brand-dark uppercase flex items-center gap-2 mb-2"><i class="ph ph-heartbeat text-brand-teal text-xl"></i> 3. Ngôn ngữ Phản hồi</label>
+                            <textarea id="inp-man-3" rows="3" class="w-full border border-gray-300 p-4 rounded focus:border-brand-teal" placeholder="Tôi thích được góp ý như thế nào?"></textarea>
+                        </div>
+                        <div>
+                            <label class="font-bold text-brand-danger uppercase flex items-center gap-2 mb-2"><i class="ph ph-warning-octagon text-red-500 text-xl"></i> 4. Red Flags (Vùng Cấm)</label>
+                            <textarea id="inp-man-4" rows="3" class="w-full border-l-4 border-red-500 bg-red-50 p-4 rounded" placeholder="Điều gì khiến bạn mất thiện cảm ngay lập tức?"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= TAB 2: 5C AUDIT ================= -->
+            <div id="content-audit" class="tab-content hidden">
+                <h2 class="text-4xl font-display font-bold text-brand-dark mb-2 uppercase">5C Leadership Audit</h2>
+                <p class="text-gray-500 text-sm mb-8">Kiểm toán toàn diện năng lực lãnh đạo trong bối cảnh BANI.</p>
+
+                <div id="audit-example" class="example-section hidden bg-blue-50 border-l-4 border-brand-teal p-6 rounded mb-8">
+                    <h3 class="text-brand-teal font-bold text-lg mb-4 uppercase border-b border-blue-200 pb-2"><i class="ph ph-star-fill mr-2"></i> Ví dụ: GĐ Khối Vận hành</h3>
+                    <div class="space-y-4">
+                        <div class="bg-white p-3 rounded border border-blue-100">
+                            <span class="font-bold text-brand-dark block">1. Connection (Kết nối): 6/10</span>
+                            <p class="text-sm italic text-gray-600">"Mất kết nối với nhân viên tuyến đầu. Thường độc thoại trong Townhall." -> <span class="font-bold">Hành động:</span> Tổ chức 'Skip-level lunch' hàng tháng.</p>
+                        </div>
+                        <div class="bg-white p-3 rounded border border-blue-100">
+                            <span class="font-bold text-brand-dark block">3. Curiosity (Tò mò): 4/10</span>
+                            <p class="text-sm italic text-gray-600">"Dựa vào kinh nghiệm cũ, ngại học AI." -> <span class="font-bold">Hành động:</span> Dành sáng thứ 7 học ChatGPT và nghe Gen Z mentoring.</p>
+                        </div>
+                        <div class="bg-white p-3 rounded border border-blue-100 border-l-4 border-l-brand-orange">
+                            <span class="font-bold text-brand-dark block">4. Conscience (Lương tâm): 7/10</span>
+                            <p class="text-sm italic text-gray-600">"Đôi khi làm ngơ cho Sale nói quá sự thật để đạt số." -> <span class="font-bold">Hành động:</span> Thiết lập chính sách 'Zero-Tolerance' với việc nói dối khách hàng.</p>
+                        </div>
+                        <div class="bg-white p-3 rounded border border-blue-100 border-l-4 border-l-brand-orange">
+                            <span class="font-bold text-brand-dark block">5. Clarity (Sự rõ ràng): 5/10</span>
+                            <p class="text-sm italic text-gray-600">"Giao việc miệng, thiếu tiêu chí cụ thể." -> <span class="font-bold">Hành động:</span> Áp dụng công thức 5W1H cho mọi email giao việc.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="audit-blank" class="input-section">
+                    <div class="grid gap-6">
+                        <!-- C1 -->
+                        <div class="bg-gray-50 p-5 rounded border border-gray-200 hover:shadow-md">
+                            <div class="flex justify-between items-center mb-3">
+                                <label class="font-bold text-xl text-brand-dark uppercase">1. Connection</label>
+                                <input type="number" id="sc-1" class="w-16 p-2 text-center border rounded font-bold text-brand-teal outline-none" placeholder="/10">
+                            </div>
+                            <p class="text-xs text-gray-500 mb-3 italic">Bạn có thấu hiểu nỗi đau của nhân viên? Có xây dựng được An toàn tâm lý?</p>
+                            <textarea id="nt-1" class="w-full p-3 border rounded text-sm h-24" placeholder="Lý do & Hành động cải thiện:"></textarea>
+                        </div>
+                        <!-- C2 -->
+                        <div class="bg-gray-50 p-5 rounded border border-gray-200 hover:shadow-md">
+                            <div class="flex justify-between items-center mb-3">
+                                <label class="font-bold text-xl text-brand-dark uppercase">2. Creativity</label>
+                                <input type="number" id="sc-2" class="w-16 p-2 text-center border rounded font-bold text-brand-teal outline-none" placeholder="/10">
+                            </div>
+                            <p class="text-xs text-gray-500 mb-3 italic">Bạn khuyến khích giải pháp mới hay ép làm theo quy trình cũ? Có cởi mở với AI?</p>
+                            <textarea id="nt-2" class="w-full p-3 border rounded text-sm h-24" placeholder="Lý do & Hành động cải thiện:"></textarea>
+                        </div>
+                        <!-- C3 -->
+                        <div class="bg-gray-50 p-5 rounded border border-gray-200 hover:shadow-md">
+                            <div class="flex justify-between items-center mb-3">
+                                <label class="font-bold text-xl text-brand-dark uppercase">3. Curiosity</label>
+                                <input type="number" id="sc-3" class="w-16 p-2 text-center border rounded font-bold text-brand-teal outline-none" placeholder="/10">
+                            </div>
+                            <p class="text-xs text-gray-500 mb-3 italic">Bạn hỏi "Tại sao" hay ra lệnh? Lần cuối học kỹ năng mới là khi nào?</p>
+                            <textarea id="nt-3" class="w-full p-3 border rounded text-sm h-24" placeholder="Lý do & Hành động cải thiện:"></textarea>
+                        </div>
+                        <!-- C4 -->
+                        <div class="bg-gray-50 p-5 rounded border border-gray-200 hover:shadow-md border-l-4 border-l-brand-teal">
+                            <div class="flex justify-between items-center mb-3">
+                                <label class="font-bold text-xl text-brand-dark uppercase">4. Conscience</label>
+                                <input type="number" id="sc-4" class="w-16 p-2 text-center border rounded font-bold text-brand-teal outline-none" placeholder="/10">
+                            </div>
+                            <p class="text-xs text-gray-500 mb-3 italic">Bạn có minh bạch, công bằng? Có dám nhận trách nhiệm khi team thất bại?</p>
+                            <textarea id="nt-4" class="w-full p-3 border rounded text-sm h-24" placeholder="Lý do & Hành động cải thiện:"></textarea>
+                        </div>
+                        <!-- C5 -->
+                        <div class="bg-gray-50 p-5 rounded border border-gray-200 hover:shadow-md border-l-4 border-l-brand-teal">
+                            <div class="flex justify-between items-center mb-3">
+                                <label class="font-bold text-xl text-brand-dark uppercase">5. Clarity</label>
+                                <input type="number" id="sc-5" class="w-16 p-2 text-center border rounded font-bold text-brand-teal outline-none" placeholder="/10">
+                            </div>
+                            <p class="text-xs text-gray-500 mb-3 italic">Nhân viên có biết chính xác kỳ vọng? Mục tiêu có rõ ràng hay mập mờ?</p>
+                            <textarea id="nt-5" class="w-full p-3 border rounded text-sm h-24" placeholder="Lý do & Hành động cải thiện:"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= TAB 3: CULTURE CANVAS ================= -->
+            <div id="content-culture" class="tab-content hidden">
+                <h2 class="text-4xl font-display font-bold text-brand-dark mb-2 uppercase">Culture Design Canvas</h2>
+                <p class="text-gray-500 text-sm mb-8">Chuyển hóa Giá trị cốt lõi thành Hành động cụ thể.</p>
+
+                <div id="culture-example" class="example-section hidden bg-purple-50 border-l-4 border-purple-500 p-6 rounded mb-8">
+                    <h3 class="text-purple-700 font-bold text-lg mb-4 uppercase"><i class="ph ph-star-fill mr-2"></i> Case Study: Công ty Bán lẻ F.</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm border-collapse bg-white shadow-sm border border-gray-200">
+                            <thead>
+                                <tr class="bg-purple-100 text-purple-900">
+                                    <th class="p-3 text-left border border-gray-200 w-1/4">GIÁ TRỊ (Value)</th>
+                                    <th class="p-3 text-left border border-gray-200 w-1/4">HÀNH ĐỘNG (Do)</th>
+                                    <th class="p-3 text-left border border-gray-200 w-1/4">NGHI THỨC (Ritual)</th>
+                                    <th class="p-3 text-left border border-gray-200 w-1/4">CẤM KỴ (Don't)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="p-3 border border-gray-200 font-bold">Khách Hàng Là Số 1</td>
+                                    <td class="p-3 border border-gray-200">Xin lỗi trước, giải thích sau. Trao quyền đền bù 200k.</td>
+                                    <td class="p-3 border border-gray-200 bg-purple-50/50">"Thứ 6 Lắng Nghe": Nghe lại 3 cuộc gọi phàn nàn nhất tuần.</td>
+                                    <td class="p-3 border border-gray-200 text-red-600">Tranh cãi tay đôi với khách -> Đình chỉ 3 ngày.</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 border border-gray-200 font-bold">Tốc Độ (Speed)</td>
+                                    <td class="p-3 border border-gray-200">Quy tắc 24h phản hồi mọi email/tin nhắn.</td>
+                                    <td class="p-3 border border-gray-200 bg-purple-50/50">"Stand-up 8:45": Họp đứng 15 phút. Trễ 1p nộp 50k.</td>
+                                    <td class="p-3 border border-gray-200 text-red-600">Ngâm việc quá 48h không báo cáo.</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 border border-gray-200 font-bold">Minh Bạch (Integrity)</td>
+                                    <td class="p-3 border border-gray-200">Báo cáo Tin Xấu trước tin tốt.</td>
+                                    <td class="p-3 border border-gray-200 bg-purple-50/50">"Fail Fast Award": Vinh danh người báo lỗi sớm nhất.</td>
+                                    <td class="p-3 border border-gray-200 text-red-600">Làm đẹp số liệu (Fake Data) -> Sa thải ngay.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="culture-blank" class="input-section">
+                    <p class="text-brand-orange font-bold mb-4 uppercase flex items-center"><i class="ph ph-note-pencil mr-2"></i> Thiết kế Văn hóa Đội ngũ:</p>
+                    <div class="space-y-8">
+                        <div class="border border-gray-300 rounded p-4 bg-gray-50 hover:shadow-md">
+                            <div class="mb-4">
+                                <label class="block font-bold text-brand-dark uppercase text-sm mb-1">1. Giá trị Cốt lõi (Keyword):</label>
+                                <input type="text" id="cv-val-1" class="w-full border-b-2 border-brand-orange bg-transparent p-2 text-xl font-bold focus:outline-none placeholder-gray-400" placeholder="VD: Đổi mới sáng tạo">
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <textarea id="cv-do-1" rows="4" class="w-full p-2 border rounded text-sm" placeholder="Hành vi cụ thể (Do)..."></textarea>
+                                <textarea id="cv-rit-1" rows="4" class="w-full p-2 border rounded text-sm" placeholder="Nghi thức duy trì..."></textarea>
+                                <textarea id="cv-dont-1" rows="4" class="w-full p-2 border rounded text-sm border-red-200 bg-red-50" placeholder="Hành vi cấm kỵ (Don't) & Hậu quả..."></textarea>
+                            </div>
+                        </div>
+                        <div class="border border-gray-300 rounded p-4 bg-gray-50 hover:shadow-md">
+                            <div class="mb-4">
+                                <label class="block font-bold text-brand-dark uppercase text-sm mb-1">2. Giá trị Cốt lõi (Keyword):</label>
+                                <input type="text" id="cv-val-2" class="w-full border-b-2 border-brand-teal bg-transparent p-2 text-xl font-bold focus:outline-none placeholder-gray-400" placeholder="VD: Tinh thần đồng đội">
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <textarea id="cv-do-2" rows="4" class="w-full p-2 border rounded text-sm" placeholder="..."></textarea>
+                                <textarea id="cv-rit-2" rows="4" class="w-full p-2 border rounded text-sm" placeholder="..."></textarea>
+                                <textarea id="cv-dont-2" rows="4" class="w-full p-2 border rounded text-sm border-red-200 bg-red-50" placeholder="..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= TAB 4: SCARF CONFLICT (FULL MATRIX) ================= -->
+            <div id="content-conflict" class="tab-content hidden">
+                <h2 class="text-4xl font-display font-bold text-brand-dark mb-2 uppercase">SCARF Conflict Resolver</h2>
+                <p class="text-gray-500 text-sm mb-8">Công cụ giải mã và hóa giải xung đột dựa trên Khoa học não bộ.</p>
+
+                <div id="conflict-example" class="example-section hidden bg-green-50 border-l-4 border-green-500 p-6 rounded mb-8">
+                    <h3 class="text-green-700 font-bold text-lg mb-4 uppercase border-b border-green-200 pb-2"><i class="ph ph-star-fill mr-2"></i> Case Study: Team Quy trình vs. Team Sale</h3>
+                    <div class="bg-white p-4 rounded shadow-sm border border-green-100 mb-6">
+                        <strong class="text-brand-dark block mb-2 font-display uppercase text-sm">Bối cảnh:</strong>
+                        <p class="text-sm text-gray-700">Team Quy trình yêu cầu Sale nhập liệu CRM trước 17h. Sale phản đối vì "phải đi khách cả ngày".</p>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm border-collapse bg-white shadow-sm">
+                            <thead>
+                                <tr class="bg-green-100 text-green-900">
+                                    <th class="p-3 text-left border border-green-200">Yếu tố SCARF</th>
+                                    <th class="p-3 text-left border border-green-200">Mối đe dọa (Threat)</th>
+                                    <th class="p-3 text-left border border-green-200">Chiến lược Hóa giải (Reward)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="p-3 border border-green-200 font-bold">STATUS (Địa vị)</td>
+                                    <td class="p-3 border border-green-200 text-red-600">Sale cảm thấy bị kiểm soát như trẻ con.</td>
+                                    <td class="p-3 border border-green-200">Khẳng định: Dữ liệu giúp Sale được Ban Giám Đốc ghi nhận thành tích rõ hơn.</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 border border-green-200 font-bold">AUTONOMY (Tự chủ)</td>
+                                    <td class="p-3 border border-green-200 text-red-600">Mất quyền tự quyết thời gian, bị ép deadline cứng.</td>
+                                    <td class="p-3 border border-green-200">Cho phép chọn thời điểm nhập (trước 9h sáng hôm sau).</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 border border-green-200 font-bold">FAIRNESS (Công bằng)</td>
+                                    <td class="p-3 border border-green-200 text-red-600">"Sao Marketing không phải nhập?"</td>
+                                    <td class="p-3 border border-green-200">Minh bạch hóa khối lượng việc của Marketing. Hứa tuyển Admin hỗ trợ sau 3 tháng.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="bg-white p-4 rounded shadow-sm border border-green-100 mt-6">
+                        <strong class="text-brand-dark block mb-2 font-display uppercase text-sm">Kịch bản Lời nói:</strong>
+                        <p class="text-gray-700 italic text-sm border-l-4 border-brand-orange pl-3 py-2 bg-gray-50">
+                            "Các bạn Sale, tôi biết thế mạnh của các bạn là ở ngoài thị trường chiến đấu <strong>(Status)</strong>. Tôi không muốn CRM trói chân các bạn. Vì vậy, tôi đề xuất: Chúng ta lùi deadline sang 9h sáng hôm sau để các bạn chủ động <strong>(Autonomy)</strong>. Dữ liệu này là bằng chứng để tôi bảo vệ mức thưởng năm nay cho các bạn <strong>(Certainty)</strong>."
+                        </p>
+                    </div>
+                </div>
+
+                <div id="conflict-blank" class="input-section">
+                    <div class="mb-8">
+                        <label class="block font-bold text-brand-dark uppercase text-sm mb-2">1. Mô tả Tình huống Xung đột:</label>
+                        <textarea id="sc-situation" rows="2" class="w-full border border-gray-300 p-3 rounded bg-gray-50 focus:border-brand-teal" placeholder="Ai mâu thuẫn với ai? Về vấn đề gì?"></textarea>
+                    </div>
+                    <div class="mb-8">
+                        <label class="block font-bold text-brand-dark uppercase text-sm mb-4">2. Ma trận Phân tích (SCARF Matrix):</label>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm border-collapse bg-white shadow-sm border border-gray-300">
+                                <thead class="bg-gray-100 text-brand-dark">
+                                    <tr>
+                                        <th class="p-3 border border-gray-300 w-1/6 text-left">Yếu tố</th>
+                                        <th class="p-3 border border-gray-300 w-5/12 text-left">Mối đe dọa (Threat)</th>
+                                        <th class="p-3 border border-gray-300 w-5/12 text-left">Chiến lược (Reward)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="p-3 border border-gray-300 font-bold bg-gray-50">STATUS</td>
+                                        <td class="p-3 border border-gray-300"><textarea id="sc-threat-s" rows="2" class="w-full border p-2 text-xs bg-red-50" placeholder="Họ có thấy bị coi thường?"></textarea></td>
+                                        <td class="p-3 border border-gray-300"><textarea id="sc-reward-s" rows="2" class="w-full border p-2 text-xs bg-green-50" placeholder="Khen ngợi, ghi nhận..."></textarea></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-3 border border-gray-300 font-bold bg-gray-50">CERTAINTY</td>
+                                        <td class="p-3 border border-gray-300"><textarea id="sc-threat-c" rows="2" class="w-full border p-2 text-xs bg-red-50" placeholder="Họ có lo sợ tương lai?"></textarea></td>
+                                        <td class="p-3 border border-gray-300"><textarea id="sc-reward-c" rows="2" class="w-full border p-2 text-xs bg-green-50" placeholder="Cam kết lộ trình..."></textarea></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-3 border border-gray-300 font-bold bg-gray-50">AUTONOMY</td>
+                                        <td class="p-3 border border-gray-300"><textarea id="sc-threat-a" rows="2" class="w-full border p-2 text-xs bg-red-50" placeholder="Họ có bị kiểm soát quá mức?"></textarea></td>
+                                        <td class="p-3 border border-gray-300"><textarea id="sc-reward-a" rows="2" class="w-full border p-2 text-xs bg-green-50" placeholder="Trao quyền lựa chọn..."></textarea></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-3 border border-gray-300 font-bold bg-gray-50">RELATEDNESS</td>
+                                        <td class="p-3 border border-gray-300"><textarea id="sc-threat-r" rows="2" class="w-full border p-2 text-xs bg-red-50" placeholder="Họ có thấy bị cô lập?"></textarea></td>
+                                        <td class="p-3 border border-gray-300"><textarea id="sc-reward-r" rows="2" class="w-full border p-2 text-xs bg-green-50" placeholder="Mời tham gia, chia sẻ..."></textarea></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-3 border border-gray-300 font-bold bg-gray-50">FAIRNESS</td>
+                                        <td class="p-3 border border-gray-300"><textarea id="sc-threat-f" rows="2" class="w-full border p-2 text-xs bg-red-50" placeholder="Họ có thấy bất công?"></textarea></td>
+                                        <td class="p-3 border border-gray-300"><textarea id="sc-reward-f" rows="2" class="w-full border p-2 text-xs bg-green-50" placeholder="Minh bạch hóa..."></textarea></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded border-2 border-brand-teal shadow-sm">
+                        <label class="block font-bold text-brand-dark uppercase text-sm mb-2 flex items-center"><i class="ph ph-chat-circle-text mr-2 text-xl text-brand-teal"></i> 3. Kịch bản Lời nói:</label>
+                        <p class="text-xs text-gray-500 mb-2">Viết ra chính xác những gì bạn sẽ nói.</p>
+                        <textarea id="sc-script" rows="4" class="w-full border border-gray-300 p-4 rounded text-sm bg-gray-50 focus:bg-white" placeholder='"Chào [Tên], tôi muốn trao đổi về..."'></textarea>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-gray-200 mt-auto py-6 no-print">
+        <div class="max-w-5xl mx-auto text-center">
+            <p class="text-sm font-bold text-gray-600 font-display uppercase tracking-widest">Học Liệu cho đào tạo</p>
+            <p class="text-xs text-gray-400 mt-1">Bản quyền thuộc Rosie Đào Hạnh Giang CEO Build Talents</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dateEl = document.getElementById('date-display');
+            if(dateEl) dateEl.textContent = new Date().toLocaleDateString('vi-VN');
+            loadData();
+        });
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('content-' + tabName).classList.remove('hidden');
+            document.querySelectorAll('nav button').forEach(btn => {
+                btn.classList.remove('tab-active', 'text-brand-dark');
+                btn.classList.add('text-gray-500');
+            });
+            const activeBtn = document.getElementById('tab-' + tabName);
+            activeBtn.classList.add('tab-active', 'text-brand-dark');
+            activeBtn.classList.remove('text-gray-500');
+        }
+
+        function setMode(mode) {
+            const views = ['manual', 'audit', 'culture', 'conflict'];
+            const blankBtn = document.getElementById('btn-blank');
+            const exampleBtn = document.getElementById('btn-example');
+            
+            if (mode === 'example') {
+                views.forEach(v => {
+                    if(document.getElementById(v + '-blank')) document.getElementById(v + '-blank').classList.add('hidden');
+                    if(document.getElementById(v + '-example')) document.getElementById(v + '-example').classList.remove('hidden');
+                });
+                blankBtn.classList.replace('bg-brand-dark', 'text-gray-500');
+                blankBtn.classList.replace('text-white', 'hover:bg-gray-100');
+                blankBtn.classList.remove('shadow');
+                exampleBtn.classList.replace('text-gray-500', 'bg-brand-orange');
+                exampleBtn.classList.replace('hover:bg-gray-100', 'text-white');
+                exampleBtn.classList.add('shadow');
+            } else {
+                views.forEach(v => {
+                    if(document.getElementById(v + '-blank')) document.getElementById(v + '-blank').classList.remove('hidden');
+                    if(document.getElementById(v + '-example')) document.getElementById(v + '-example').classList.add('hidden');
+                });
+                exampleBtn.classList.replace('bg-brand-orange', 'text-gray-500');
+                exampleBtn.classList.replace('text-white', 'hover:bg-gray-100');
+                exampleBtn.classList.remove('shadow');
+                blankBtn.classList.replace('text-gray-500', 'bg-brand-dark');
+                blankBtn.classList.replace('hover:bg-gray-100', 'text-white');
+                blankBtn.classList.add('shadow');
+            }
+        }
+
+        function saveAllData() {
+            document.querySelectorAll('input, textarea').forEach(input => {
+                if(input.id) localStorage.setItem('lead2026_pro_' + input.id, input.value);
+            });
+            const btn = document.querySelector('button[onclick="saveAllData()"]');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="ph ph-check mr-2"></i> ĐÃ LƯU!';
+            btn.classList.replace('bg-brand-teal', 'bg-green-600');
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.classList.replace('bg-green-600', 'bg-brand-teal');
+            }, 1500);
+        }
+
+        function loadData() {
+            document.querySelectorAll('input, textarea').forEach(input => {
+                if(input.id) {
+                    const saved = localStorage.getItem('lead2026_pro_' + input.id);
+                    if(saved) input.value = saved;
+                }
+            });
+        }
+
+        document.querySelectorAll('input, textarea').forEach(el => {
+            el.addEventListener('change', saveAllData);
+        });
+    </script>
+</body>
+</html>
